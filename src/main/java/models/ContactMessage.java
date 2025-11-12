@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.OffsetDateTime;
+
 @Entity
 @Table(name = "CONTACT_MESSAGES")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor

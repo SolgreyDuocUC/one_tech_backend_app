@@ -1,10 +1,11 @@
 package models;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import java.time.OffsetDateTime;
+
 @Entity
 @Table(name = "POST_COMMENTS")
 @Getter  @Setter @NoArgsConstructor @AllArgsConstructor

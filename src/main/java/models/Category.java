@@ -1,18 +1,14 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="CATEGORIES")
-@Getter @Setter @NoArgsConstructor
-@AllArgsConstructor @ToString
-@Schema(description = "Entidad que representa un categoria")
-public class Categories {
+@Entity  @Table(name = "CATEGORIES")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_category")
@@ -25,10 +21,9 @@ public class Categories {
     private String slug;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference("category-products")
-    private List<Product> product = new ArrayList<>();
-
+    @JsonBackReference("category-products")
+    private List<Product> products = new ArrayList<>();
 }

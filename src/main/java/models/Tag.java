@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
 @Table(name = "TAGS")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
@@ -26,5 +26,5 @@ public class Tag {
 
     @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("tag-posttags")
-    private Set<PostTag> postTags = new HashSet<>();
+    private Set<com.yourapp.model.PostTag> postTags = new HashSet<>();
 }

@@ -1,12 +1,18 @@
-package models;
+package com.yourapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import models.Post;
+import models.PostTagId;
+import models.Tag;
+import models.User;
+
 @Entity
 @Table(name = "POST_TAGS")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class PostTag {
+
     @EmbeddedId
     private PostTagId id;
 
@@ -33,5 +39,4 @@ public class PostTag {
         this.tag = tag;
         this.user = user;
     }
-
 }

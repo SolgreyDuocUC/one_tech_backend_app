@@ -1,58 +1,41 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
-
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor @ToString
 @Schema (description = "Entidad que representa un usuario")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_users")
-    @Schema(description = "Codigo del usuario", example = "1")
-    private Long idUser;
+    @Column(name = "id_users")
+    private Long id;
 
-    @Column(name = "runUser", nullable = false)
-    @NotBlank(message = "El campo run usuario no puede ser vacio")
-    @Pattern(regexp = "\\d{1,8}-[\\dKk]}", message = "El formato del run usuario debe ser XXXXXXXX-X")
-    @Schema(description = "Rut del usuario", example = "11222333-4")
-    private String runUser;
+    @Column(name = "rut_users", length = 12, nullable = false)
+    private String rut;
 
-    @Column(name = "primer-nombre", nullable = false)
-    @NotBlank(message = "El campo primer nombre usuario no puede ser vacio")
-    @Schema(description = "Primer nombre del usuario", example = "Juan")
+    @Column(name = "first_name_users", length = 60, nullable = false)
     private String firstName;
 
-    @Column(name = "apellido-nombre", nullable = false)
-    @NotBlank(message = "El campo apellido nombre usuario no puede ser vacio")
-    @Schema(description = "Primer apellido del usuario", example = "Bodoque")
+    @Column(name = "las_name_users", length = 60, nullable = false)
     private String lastName;
 
-    @Column(name = "correo-usuario", nullable = false)
-    @NotBlank(message = "El campo correo del usuario no puede ser vacio")
-    @Schema(description = "Correo del usuario", example = "ju.carlos@gmail.com")
+    @Column(name = "email_users", length = 120, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "numero-usuario")
-    @NotBlank(message = "El campo numero del usuario no puede ser vacio")
-    @Schema(description = "Numero de telefono del usaurio", example = "5612345678")
-    private Number phone;
+    @Column(name = "phone_users", length = 20)
+    private String phone;
 
-    @Column(name = "contrasenia-usuario", nullable = false)
-    @NotBlank(message = "El campo contrasenia del usuairo no puede ser vacio")
-    @Schema(description = "Contrasenia del usuario", example = "AaBbCcDd123")
+    @Column(name = "password_hash_users", length = 255, nullable = false)
     private String passwordHash;
 
     @Column(name = "is_active")
@@ -64,19 +47,14 @@ public class User {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false)
-    @JsonManagedReference("user-addresses")
-    private List<Addresses>  addresses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
-    @JsonManagedReference("user-messages")
-    private List<ContactMessage> messages = new ArrayList<>();
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private List<Order> orders = new ArrayList<>();
+    private List<Cart> carts = new ArrayList<>();
 
-    public enum OrderStatus { PENDING, PAID, SHIPPED, CANCELLED }
-    public enum PaymentMethod { CARD, DEBIT, CASH, TRANSFER }
+    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserRole> userRoles = new HashSet<>();
 
 }
 
@@ -90,3 +68,63 @@ public class User {
 //is_active         BOOLEAN NOT NULL DEFAULT TRUE,
 //created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
 //updated_at        TIMESTAMPTZ NOT NULL DEFAULT now()
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="id_users")
+//    @Schema(description = "Codigo del usuario", example = "1")
+//    private Long idUser;
+//
+//    @Column(name = "runUser", nullable = false)
+//    @NotBlank(message = "El campo run usuario no puede ser vacio")
+//    @Pattern(regexp = "\\d{1,8}-[\\dKk]}", message = "El formato del run usuario debe ser XXXXXXXX-X")
+//    @Schema(description = "Rut del usuario", example = "11222333-4")
+//    private String runUser;
+//
+//    @Column(name = "primer-nombre", nullable = false)
+//    @NotBlank(message = "El campo primer nombre usuario no puede ser vacio")
+//    @Schema(description = "Primer nombre del usuario", example = "Juan")
+//    private String firstName;
+//
+//    @Column(name = "apellido-nombre", nullable = false)
+//    @NotBlank(message = "El campo apellido nombre usuario no puede ser vacio")
+//    @Schema(description = "Primer apellido del usuario", example = "Bodoque")
+//    private String lastName;
+//
+//    @Column(name = "correo-usuario", nullable = false)
+//    @NotBlank(message = "El campo correo del usuario no puede ser vacio")
+//    @Schema(description = "Correo del usuario", example = "ju.carlos@gmail.com")
+//    private String email;
+//
+//    @Column(name = "numero-usuario")
+//    @NotBlank(message = "El campo numero del usuario no puede ser vacio")
+//    @Schema(description = "Numero de telefono del usaurio", example = "5612345678")
+//    private Number phone;
+//
+//    @Column(name = "contrasenia-usuario", nullable = false)
+//    @NotBlank(message = "El campo contrasenia del usuairo no puede ser vacio")
+//    @Schema(description = "Contrasenia del usuario", example = "AaBbCcDd123")
+//    private String passwordHash;
+//
+//    @Column(name = "is_active")
+//    private Boolean isActive;
+//
+//    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+//    private OffsetDateTime createdAt;
+//
+//    @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+//    private OffsetDateTime updatedAt;
+//
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false)
+//    @JsonManagedReference("user-addresses")
+//    private List<Addresses>  addresses = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+//    @JsonManagedReference("user-messages")
+//    private List<ContactMessage> messages = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+//    private List<Order> orders = new ArrayList<>();
+//
+//    public enum OrderStatus { PENDING, PAID, SHIPPED, CANCELLED }
+//    public enum PaymentMethod { CARD, DEBIT, CASH, TRANSFER }

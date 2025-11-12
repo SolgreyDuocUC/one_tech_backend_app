@@ -1,15 +1,16 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
 import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="communes")
+@Table(name="COMMUNES")
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor @ToString
 @Schema(description = "Entidad que representa un communes")
@@ -17,18 +18,20 @@ import lombok.*;
 public class Communes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_communes")
+    @Column(name = "id_commune")
     @Schema(description = "Codigo del Communes", example = "1")
-    private Long idCommunes;
+    private Long id;
 
     @Column(name = "name_commune", nullable = false, length = 80)
     @NotBlank(message = "El nombre de la comuna no puede ser vacío")
-    @Schema(description = "Nombre de la comuna", example = "Zapallar")
-    private String nameCommune;
+    private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_region", nullable = false)
     @JsonBackReference("region-communes")
-    @ToString.Exclude
-    private Regions region;
+    private Region region;
+
+    @OneToMany(mappedBy = "commune")
+    @JsonManagedReference("commune-addresses")
+    private List<Addresses> addresses = new ArrayList<>();
 }
