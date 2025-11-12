@@ -12,9 +12,12 @@ import java.util.List;
 @RequestMapping("/api/v1/roles")
 public class RoleController {
 
+    /*
     public ResponseEntity<List<RoleDTO>> getAll(){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body()
     }
+
+     */
 }
