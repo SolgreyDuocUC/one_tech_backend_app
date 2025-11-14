@@ -1,0 +1,26 @@
+package com.duocuc.one_tech.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        Contact contact = new Contact();
+        contact.setName("Solgrey");
+        contact.setEmail("sol.medina@duocuc.cl");
+        return new OpenAPI()
+                .info(new Info()
+                        .title("One Tech")
+                        .version("1.0.0")
+                        .description("Este es el Backend monolítico de One Tech App")
+                        .contact(contact)
+                        .summary("One Tech App")
+                );
+    }
+}
