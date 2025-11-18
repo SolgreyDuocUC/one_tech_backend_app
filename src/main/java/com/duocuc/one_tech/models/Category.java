@@ -26,4 +26,7 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonBackReference("category-products")
     private List<Product> products = new ArrayList<>();
+
+    public void setCategoryName(String name) {
+    }
 }

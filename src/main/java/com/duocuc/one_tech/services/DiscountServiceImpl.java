@@ -10,6 +10,7 @@ import com.duocuc.one_tech.models.Cart;
 import com.duocuc.one_tech.models.Category;
 import com.duocuc.one_tech.models.Discount;
 import com.duocuc.one_tech.repositories.CartRepository;
+import com.duocuc.one_tech.repositories.CategoryRepository;
 import com.duocuc.one_tech.repositories.DiscountRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
