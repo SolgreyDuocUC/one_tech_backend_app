@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.OffsetDateTime;
 import java.util.Map;
 
+import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyles.exceptions;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
