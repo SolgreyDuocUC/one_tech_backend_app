@@ -2,10 +2,11 @@ package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.cart.CartDTO;
 import com.duocuc.one_tech.dto.cart.dto.UpdateCartItemQtyRequest;
-import com.duocuc.one_tech.services.DiscountService;
+import com.duocuc.one_tech.services.Discount.DiscountService;
+import exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.duocuc.one_tech.services.CartService;
+import com.duocuc.one_tech.services.Cart.CartService;
 import com.duocuc.one_tech.dto.cart.dto.AddCartItemRequest;
 
 @RestController
@@ -24,13 +25,13 @@ public class CartController {
 
     // GET /api/carts/{cartId}
     @GetMapping("/{cartId}")
-    public ResponseEntity<CartDTO> getCart(@PathVariable Long cartId) {
+    public ResponseEntity<CartDTO> getCart(@PathVariable Long cartId) throws NotFoundException {
         return ResponseEntity.ok(cartService.getCartById(cartId));
     }
 
     // POST /api/carts?userId=1
     @PostMapping
-    public ResponseEntity<CartDTO> createCart(@RequestParam Long userId) {
+    public ResponseEntity<CartDTO> createCart(@RequestParam Long userId) throws NotFoundException {
         CartDTO dto = cartService.createCartForUser(userId);
         return ResponseEntity.ok(dto);
     }
@@ -38,7 +39,7 @@ public class CartController {
     // POST /api/carts/{cartId}/items
     @PostMapping("/{cartId}/items")
     public ResponseEntity<CartDTO> addItem(@PathVariable Long cartId,
-                                           @RequestBody AddCartItemRequest request) {
+                                           @RequestBody AddCartItemRequest request) throws NotFoundException {
         CartDTO dto = cartService.addItem(cartId, request.productId(), request.qty());
         return ResponseEntity.ok(dto);
     }
@@ -47,7 +48,7 @@ public class CartController {
     @PutMapping("/{cartId}/items/{itemId}")
     public ResponseEntity<CartDTO> updateItemQty(@PathVariable Long cartId,
                                                  @PathVariable Long itemId,
-                                                 @RequestBody UpdateCartItemQtyRequest request) {
+                                                 @RequestBody UpdateCartItemQtyRequest request) throws NotFoundException {
         CartDTO dto = cartService.updateItemQty(cartId, itemId, request.qty());
         return ResponseEntity.ok(dto);
     }
@@ -55,14 +56,14 @@ public class CartController {
     // DELETE /api/carts/{cartId}/items/{itemId}
     @DeleteMapping("/{cartId}/items/{itemId}")
     public ResponseEntity<CartDTO> removeItem(@PathVariable Long cartId,
-                                              @PathVariable Long itemId) {
+                                              @PathVariable Long itemId) throws NotFoundException {
         CartDTO dto = cartService.removeItem(cartId, itemId);
         return ResponseEntity.ok(dto);
     }
 
     // DELETE /api/carts/{cartId}/items  -> vaciar carrito
     @DeleteMapping("/{cartId}/items")
-    public ResponseEntity<CartDTO> clearCart(@PathVariable Long cartId) {
+    public ResponseEntity<CartDTO> clearCart(@PathVariable Long cartId) throws NotFoundException {
         CartDTO dto = cartService.clearCart(cartId);
         return ResponseEntity.ok(dto);
     }

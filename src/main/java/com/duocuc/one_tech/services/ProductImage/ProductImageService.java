@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.ProductImage;
 
 import com.duocuc.one_tech.dto.productImage.ProductImageDTO;
 

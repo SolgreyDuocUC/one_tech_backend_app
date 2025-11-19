@@ -12,14 +12,16 @@ public class UserRole {
     private UserRoleId roleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    // CORRECCIÓN: Debe coincidir con 'idUsers' de UserRoleId
     @MapsId("idUsers")
     @JoinColumn(name = "id_users", nullable = false)
-    private  User user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idRole")
+    // CORRECCIÓN: Debe coincidir con 'idRoles' de UserRoleId
+    @MapsId("idRoles")
     @JoinColumn(name = "id_role", nullable = false)
-    private  Role role;
+    private Role role;
 
     @Column(name = "granted_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime grantedAt;

@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.Contact;
 
 import com.duocuc.one_tech.dto.contactMessage.ContactMessageDTO;
 import com.duocuc.one_tech.dto.contactMessage.dto.ContactMessageMapper;

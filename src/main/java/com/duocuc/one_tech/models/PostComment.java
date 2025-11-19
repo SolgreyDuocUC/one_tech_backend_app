@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "POST_COMMENTS")
-@Getter  @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class PostComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class PostComment {
     @NotBlank
     private String content;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH ZONE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime createdAt;
 
     @Column(name = "is_visible")

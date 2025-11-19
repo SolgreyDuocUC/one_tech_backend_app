@@ -29,10 +29,4 @@ public class PostTag {
     @JoinColumn(name = "id_users")
     private User user;
 
-    public PostTag(PostTagId id, Post post, Tag tag, User user) {
-        this.id = id;
-        this.post = post;
-        this.tag = tag;
-        this.user = user;
-    }
 }

@@ -2,7 +2,7 @@ package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.review.ReviewDTO;
 import com.duocuc.one_tech.dto.review.dto.ReviewRequest;
-import com.duocuc.one_tech.services.ReviewService;
+import com.duocuc.one_tech.services.Review.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

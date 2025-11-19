@@ -1,7 +1,7 @@
 package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.productImage.ProductImageDTO;
-import com.duocuc.one_tech.services.ProductImageService;
+import com.duocuc.one_tech.services.ProductImage.ProductImageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

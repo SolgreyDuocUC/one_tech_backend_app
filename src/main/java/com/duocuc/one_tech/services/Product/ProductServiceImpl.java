@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.Product;
 
 import com.duocuc.one_tech.dto.product.ProductDTO;
 import com.duocuc.one_tech.dto.product.ProductMapper;

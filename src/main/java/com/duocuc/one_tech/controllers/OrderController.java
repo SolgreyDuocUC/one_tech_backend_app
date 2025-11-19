@@ -1,7 +1,8 @@
 package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.order.OrderDTO;
-import com.duocuc.one_tech.services.OrderService;
+import com.duocuc.one_tech.services.Order.OrderService;
+import exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,20 +22,20 @@ public class OrderController {
 
     // POST /api/orders/from-cart/{cartId}
     @PostMapping("/from-cart/{cartId}")
-    public ResponseEntity<OrderDTO> createFromCart(@PathVariable Long cartId) {
+    public ResponseEntity<OrderDTO> createFromCart(@PathVariable Long cartId) throws NotFoundException {
         OrderDTO dto = orderService.createOrderFromCart(cartId);
         return ResponseEntity.ok(dto);
     }
 
     // GET /api/orders/{orderId}
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDTO> getOrder(@PathVariable Long orderId) {
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable Long orderId) throws NotFoundException {
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
     // GET /api/orders/user/{userId}
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable Long userId) throws NotFoundException {
         return ResponseEntity.ok(orderService.getOrdersByUser(userId));
     }
 

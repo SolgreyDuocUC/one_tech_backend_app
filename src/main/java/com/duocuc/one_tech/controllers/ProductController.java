@@ -3,7 +3,7 @@ package com.duocuc.one_tech.controllers;
 import com.duocuc.one_tech.dto.product.ProductDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.duocuc.one_tech.services.ProductService;
+import com.duocuc.one_tech.services.Product.ProductService;
 
 import java.net.URI;
 import java.util.List;

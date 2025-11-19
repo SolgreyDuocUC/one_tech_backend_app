@@ -20,7 +20,6 @@ public class SwaggerConfig {
                         .version("1.0.0")
                         .description("Este es el Backend monolítico de One Tech App")
                         .contact(contact)
-                        .summary("One Tech App")
                 );
     }
 }

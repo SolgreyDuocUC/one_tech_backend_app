@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.Blog;
 
 import com.duocuc.one_tech.dto.post.*;
 import com.duocuc.one_tech.dto.post.dto.PostCommentDTO;

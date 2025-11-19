@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.Cart;
 
 import com.duocuc.one_tech.dto.cart.CartDTO;
 import com.duocuc.one_tech.dto.cart.CartMapper;
@@ -39,13 +39,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional(readOnly = true)
-    public CartDTO getCartById(Long cartId) {
+    public CartDTO getCartById(Long cartId) throws NotFoundException {
         Cart cart = findCartOrThrow(cartId);
         return CartMapper.toDto(cart);
     }
 
     @Override
-    public CartDTO createCartForUser(Long userId) {
+    public CartDTO createCartForUser(Long userId) throws NotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado con id " + userId));
 
@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDTO addItem(Long cartId, Long productId, Integer qty) {
+    public CartDTO addItem(Long cartId, Long productId, Integer qty) throws NotFoundException {
         if (qty == null || qty <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
         }
@@ -96,7 +96,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDTO updateItemQty(Long cartId, Long itemId, Integer qty) {
+    public CartDTO updateItemQty(Long cartId, Long itemId, Integer qty) throws NotFoundException {
         if (qty == null || qty <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
         }
@@ -117,7 +117,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDTO removeItem(Long cartId, Long itemId) {
+    public CartDTO removeItem(Long cartId, Long itemId) throws NotFoundException {
         Cart cart = findCartOrThrow(cartId);
 
         List<CartItem> items = cart.getItems();
@@ -133,7 +133,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDTO clearCart(Long cartId) {
+    public CartDTO clearCart(Long cartId) throws NotFoundException {
         Cart cart = findCartOrThrow(cartId);
 
         cart.getItems().clear();
@@ -145,7 +145,7 @@ public class CartServiceImpl implements CartService {
         return CartMapper.toDto(saved);
     }
 
-    private Cart findCartOrThrow(Long cartId) {
+    private Cart findCartOrThrow(Long cartId) throws NotFoundException {
         return cartRepository.findById(cartId)
                 .orElseThrow(() -> new NotFoundException("Carrito no encontrado con id " + cartId));
     }

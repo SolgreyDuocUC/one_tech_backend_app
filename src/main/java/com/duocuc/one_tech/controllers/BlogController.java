@@ -4,7 +4,7 @@ import com.duocuc.one_tech.dto.post.*;
 import com.duocuc.one_tech.dto.post.dto.PostCommentDTO;
 import com.duocuc.one_tech.dto.post.dto.PostCommentRequest;
 import com.duocuc.one_tech.dto.post.TagDTO;
-import com.duocuc.one_tech.services.BlogService;
+import com.duocuc.one_tech.services.Blog.BlogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

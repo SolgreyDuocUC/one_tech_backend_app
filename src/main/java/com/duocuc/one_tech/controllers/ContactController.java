@@ -2,7 +2,7 @@ package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.contactMessage.ContactMessageDTO;
 import com.duocuc.one_tech.dto.contactMessage.dto.ContactMessageRequest;
-import com.duocuc.one_tech.services.ContactService;
+import com.duocuc.one_tech.services.Contact.ContactService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

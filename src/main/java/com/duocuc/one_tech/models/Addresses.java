@@ -20,7 +20,7 @@ public class Addresses {
 
     @Column(name = "line1_address", length = 120, nullable = false)
     @NotBlank
-    private Long idAddress;
+    private String line1Address;
 
     @Column(name = "is_default")
     private Boolean isDefault;
@@ -36,5 +36,5 @@ public class Addresses {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_commune", nullable = false)
     @JsonBackReference("commune-addresses")
-    private Communes communes;
+    private Communes commune;
 }

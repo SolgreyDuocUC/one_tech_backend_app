@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.Order;
 
 import com.duocuc.one_tech.dto.order.OrderDTO;
 import com.duocuc.one_tech.dto.order.OrderMapper;
@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO createOrderFromCart(Long cartId) {
+    public OrderDTO createOrderFromCart(Long cartId) throws NotFoundException {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new NotFoundException("Carrito no encontrado con id " + cartId));
 
@@ -108,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public OrderDTO getOrderById(Long orderId) {
+    public OrderDTO getOrderById(Long orderId) throws NotFoundException {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Orden no encontrada con id " + orderId));
         return OrderMapper.toDto(order);
@@ -116,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderDTO> getOrdersByUser(Long userId) {
+    public List<OrderDTO> getOrdersByUser(Long userId) throws NotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado con id " + userId));
 

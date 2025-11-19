@@ -1,4 +1,4 @@
-package com.duocuc.one_tech.services;
+package com.duocuc.one_tech.services.Review;
 
 import com.duocuc.one_tech.dto.review.ReviewDTO;
 import com.duocuc.one_tech.dto.review.dto.ReviewRequest;
