@@ -14,17 +14,17 @@ public class Discount {
     @Column(name = "id_discount")
     private Long id;
 
-    @Column(name = "code", length = 30, nullable = false, unique = true)
+    @Column(name = "code_discount", length = 30, nullable = false, unique = true)
     private String code;
 
-    @Column(name = "description", length = 120)
+    @Column(name = "description_discount", length = 120)
     private String description;
 
     @Column(name = "discount_type", length = 10, nullable = false)
     private String discountType;
 
     @Column(name = "discount_value", precision = 10, scale = 2, nullable = false)
-    private BigDecimal Value;
+    private BigDecimal value;
 
     @Column(name = "min_purchase", precision = 12, scale = 2)
     private BigDecimal minPurchase;
@@ -39,6 +39,6 @@ public class Discount {
     private Boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applies_to_category")
+    @JoinColumn(name = "id_category")
     private Category appliesToCategory;
 }

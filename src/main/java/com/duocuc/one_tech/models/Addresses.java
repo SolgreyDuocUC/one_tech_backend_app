@@ -22,11 +22,17 @@ public class Addresses {
     @NotBlank
     private String line1Address;
 
+    @Column(name = "line2_address", length = 120)
+    private String line2Address;
+
+    @Column(name = "postal_code_address", length = 12)
+    private String postalCodeAddress;
+
     @Column(name = "is_default")
     private Boolean isDefault;
 
-    @Column(name = "creates_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime createsAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime createdAt;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_users", nullable = false)

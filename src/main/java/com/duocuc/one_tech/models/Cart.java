@@ -42,8 +42,13 @@ public class Cart {
     private List<CartItem> items = new ArrayList<>();
 
     public void addItem(CartItem it) {it.setCart(this); items.add(it);}
-    public void recalcTotals(){
-        this.itemsTotal = items.stream().map(CartItem::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-        this.grandTotal = itemsTotal.subtract(discountTotal != null ? discountTotal : BigDecimal.ZERO);
+    public void removeItem(CartItem it) {items.remove(it); it.setCart(null);}
+
+    public void recalcTotals() {
+        this.itemsTotal = items.stream()
+                .map(CartItem::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        this.grandTotal = this.itemsTotal.subtract(this.discountTotal);
     }
 }
