@@ -9,8 +9,8 @@ public record PostDTO(
         String excerpt,
         String content,
         String coverImageUrl,
-        OffsetDateTime publishedAt,
         Boolean isPublished,
+        OffsetDateTime publishedAt,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt
 ) {}
