@@ -15,8 +15,8 @@ public class PostMapper {
                 post.getExcerpt(),
                 post.getContent(),
                 post.getCoverImageUrl(),
-                post.getPublishedAt(),
                 post.getIsPublished(),
+                post.getPublishedAt(),
                 post.getCreatedAt(),
                 post.getUpdatedAt()
         );
