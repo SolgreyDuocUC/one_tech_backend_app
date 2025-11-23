@@ -65,4 +65,8 @@ public class User {
     public @NotNull(message = "El ID del usuario no puede ser nulo") Long getIdUsers() {
         return this.id;
     }
+
+    public String getName() {
+        return  this.firstName + " " + this.lastName;
+    }
 }
