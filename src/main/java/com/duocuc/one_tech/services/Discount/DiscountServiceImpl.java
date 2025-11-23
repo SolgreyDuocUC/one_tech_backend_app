@@ -36,10 +36,6 @@ public class DiscountServiceImpl implements DiscountService {
         this.categoryRepository = categoryRepository;
     }
 
-
-    //   APLICAR DESCUENTO A CARRITO
-
-
     @Override
     public CartDTO applyDiscountToCart(Long cartId, String code) {
 
