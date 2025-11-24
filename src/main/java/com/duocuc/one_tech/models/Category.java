@@ -37,7 +37,7 @@ public class Category {
     @JsonManagedReference("category-parent")
     private List<Category> childCategories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category")
-    @JsonManagedReference("category-products")
-    private List<Product> products = new ArrayList<>();
+//    @OneToMany(mappedBy = "category")
+//    @JsonManagedReference("category-products")
+//    private List<Product> products = new ArrayList<>();
 }

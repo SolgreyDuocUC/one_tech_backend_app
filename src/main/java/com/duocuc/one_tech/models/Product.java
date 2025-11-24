@@ -18,7 +18,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_products")
+    @Column(name="id_product")
     @Schema(description = "Codigo del product", example = "1")
     private Long id;
 
@@ -49,10 +49,10 @@ public class Product {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime updatedAt;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_category", nullable = false)
-    @JsonBackReference("category-products")
-    private Category category;
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_category", nullable = false)
+//    @JsonBackReference("category-products")
+//    private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("product-images")
