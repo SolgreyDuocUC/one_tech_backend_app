@@ -4,6 +4,7 @@ import com.duocuc.one_tech.dto.post.*;
 import com.duocuc.one_tech.dto.post.dto.PostCommentDTO;
 import com.duocuc.one_tech.dto.post.dto.PostCommentRequest;
 import com.duocuc.one_tech.dto.post.TagDTO;
+import com.duocuc.one_tech.dto.post.dto.PostUpdateDTO;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface BlogService {
     List<PostDTO> listPosts();
     PostDTO getPostById(Long id);
     PostDTO getPostBySlug(String slug);
+
+    PostDTO updatePost(Long id, PostUpdateDTO dto);
 
     // TAGS
     List<TagDTO> listTags();

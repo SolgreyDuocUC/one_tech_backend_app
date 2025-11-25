@@ -4,6 +4,7 @@ import com.duocuc.one_tech.dto.post.*;
 import com.duocuc.one_tech.dto.post.dto.PostCommentDTO;
 import com.duocuc.one_tech.dto.post.dto.PostCommentRequest;
 import com.duocuc.one_tech.dto.post.TagDTO;
+import com.duocuc.one_tech.dto.post.dto.PostUpdateDTO;
 import com.duocuc.one_tech.services.Blog.BlogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +71,12 @@ public class BlogController {
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
         blogService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
+    }
+    // PUT /api/blog/posts/{id}
+    @PutMapping("/posts/{id}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable Long id,
+                                              @RequestBody PostUpdateDTO dto) {
+        PostDTO updated = blogService.updatePost(id, dto);
+        return ResponseEntity.ok(updated);
     }
 }

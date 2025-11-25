@@ -62,10 +62,12 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("post-comments")
+    @Builder.Default
     private List<PostComment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("post-posttags")
+    @Builder.Default
     private Set<PostTag> postTags = new HashSet<>();
 
     public void addTag(Tag tag, User user) {
