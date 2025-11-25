@@ -25,6 +25,7 @@ public class BlogServiceImpl implements BlogService {
     private final TagRepository tagRepository;
     private final UserRepository userRepository;
 
+
     public BlogServiceImpl(PostRepository postRepository,
                            PostCommentRepository postCommentRepository,
                            TagRepository tagRepository,
@@ -114,5 +115,31 @@ public class BlogServiceImpl implements BlogService {
             throw new NotFoundException("Comentario no encontrado con id " + commentId);
         }
         postCommentRepository.deleteById(commentId);
+    }
+    @Override
+    public PostDTO updatePost(Long id, PostUpdateDTO dto) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post no encontrado"));
+
+        // Actualizar solo los campos que vengan en el DTO (puedes hacerlo obligatorio si quieres)
+        if (dto.title() != null)          post.setTitle(dto.title());
+        if (dto.slug() != null)           post.setSlug(dto.slug());
+        if (dto.excerpt() != null)        post.setExcerpt(dto.excerpt());
+        if (dto.content() != null)        post.setContent(dto.content());
+        if (dto.coverImageUrl() != null)  post.setCoverImageUrl(dto.coverImageUrl());
+
+        if (dto.isPublished() != null) {
+            post.setIsPublished(dto.isPublished());
+
+            if (Boolean.TRUE.equals(dto.isPublished()) && post.getPublishedAt() == null) {
+                post.setPublishedAt(OffsetDateTime.now());
+            }
+            if (Boolean.FALSE.equals(dto.isPublished())) {
+                post.setPublishedAt(null);
+            }
+        }
+
+        Post saved = postRepository.save(post);
+        return PostMapper.toDto(saved);
     }
 }

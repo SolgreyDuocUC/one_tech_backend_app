@@ -2,6 +2,8 @@ package com.duocuc.one_tech.services.Order;
 
 import com.duocuc.one_tech.dto.order.OrderDTO;
 import com.duocuc.one_tech.dto.order.OrderMapper;
+import com.duocuc.one_tech.dto.order.dto.OrderStatusUpdateDTO;
+import com.duocuc.one_tech.dto.order.dto.OrderUpdateDTO;
 import com.duocuc.one_tech.models.*;
 import com.duocuc.one_tech.repositories.CartRepository;
 import com.duocuc.one_tech.repositories.OrderRepository;
@@ -133,5 +135,52 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(OrderMapper::toDto)
                 .toList();
+    }
+    @Override
+    public OrderDTO actualizarEstado(Long orderId, OrderStatusUpdateDTO dto) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        order.setStatus(dto.status());
+
+        if ("PAID".equalsIgnoreCase(dto.status())) {
+            order.setPaidAt(OffsetDateTime.now());
+        }
+
+        Order saved = orderRepository.save(order);
+        return OrderMapper.toDto(saved);
+    }
+
+    @Override
+    public void eliminarOrden(Long orderId) {
+        if (!orderRepository.existsById(orderId)) {
+            throw new RuntimeException("Orden no encontrada");
+        }
+        orderRepository.deleteById(orderId);
+    }
+    @Override
+    public OrderDTO actualizarOrden(Long orderId, OrderUpdateDTO dto) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        // Actualizar descuento si viene en el DTO
+        if (dto.discountTotal() != null) {
+            order.setDiscountTotal(dto.discountTotal());
+        }
+
+        // Opcional: permitir cambiar estado también desde el PUT
+        if (dto.status() != null) {
+            order.setStatus(dto.status());
+
+            if ("PAID".equalsIgnoreCase(dto.status())) {
+                order.setPaidAt(OffsetDateTime.now());
+            }
+        }
+
+        // Recalcular totales con tu lógica de dominio
+        order.recalcTotals();  // ya la tienes definida en la entidad Order
+
+        Order saved = orderRepository.save(order);
+        return OrderMapper.toDto(saved);   // mapea a tu OrderDTO
     }
 }

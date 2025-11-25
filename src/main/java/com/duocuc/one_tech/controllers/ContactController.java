@@ -2,6 +2,7 @@ package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.contactMessage.ContactMessageDTO;
 import com.duocuc.one_tech.dto.contactMessage.dto.ContactMessageRequest;
+import com.duocuc.one_tech.dto.contactMessage.dto.ContactUpdateDTO;
 import com.duocuc.one_tech.services.Contact.ContactService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,4 +53,13 @@ public class ContactController {
         contactService.deleteMessage(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/messages/{id}")
+    public ResponseEntity<ContactMessageDTO> actualizarMensaje(
+            @PathVariable Long id,
+            @RequestBody ContactUpdateDTO dto
+    ) {
+        ContactMessageDTO actualizado = contactService.actualizarMensaje(id, dto);
+        return ResponseEntity.ok(actualizado);
+    }
+
 }

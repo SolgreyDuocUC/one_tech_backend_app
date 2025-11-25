@@ -1,8 +1,10 @@
 package com.duocuc.one_tech.repositories;
 
-import com.duocuc.one_tech.models.ContactMessage;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.duocuc.one_tech.models.ContactMessage
+import org.springframework.data.jpa.repository.JpaRepository
 
-public interface ContactMessageRepository : JpaRepository<ContactMessage, Long>{
-
+interface ContactMessageRepository : JpaRepository<ContactMessage, Long>{
 }
+
+
+

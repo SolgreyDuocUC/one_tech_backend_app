@@ -1,6 +1,8 @@
 package com.duocuc.one_tech.controllers;
 
 import com.duocuc.one_tech.dto.order.OrderDTO;
+import com.duocuc.one_tech.dto.order.dto.OrderStatusUpdateDTO;
+import com.duocuc.one_tech.dto.order.dto.OrderUpdateDTO;
 import com.duocuc.one_tech.services.Order.OrderService;
 import exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +46,29 @@ public class OrderController {
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
-}
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<OrderDTO> actualizarEstado(
+            @PathVariable Long id,
+            @RequestBody OrderStatusUpdateDTO dto
+    ) {
+        OrderDTO updated = orderService.actualizarEstado(id, dto);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarOrden(@PathVariable Long id) {
+        orderService.eliminarOrden(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+        public ResponseEntity<OrderDTO> actualizarOrden(
+                @PathVariable Long id,
+                @RequestBody OrderUpdateDTO dto
+        ) {
+            OrderDTO actualizada = orderService.actualizarOrden(id, dto);
+            return ResponseEntity.ok(actualizada);
+        }
+    }
+
 
