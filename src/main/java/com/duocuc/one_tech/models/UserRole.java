@@ -26,4 +26,5 @@ public class UserRole {
 
     @Column(name = "granted_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime grantedAt;
+
 }

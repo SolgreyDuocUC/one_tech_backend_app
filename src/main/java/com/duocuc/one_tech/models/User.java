@@ -6,10 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "USERS")
@@ -62,11 +59,21 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserRole> userRoles = new HashSet<>();
 
+
+    // Métodos personalizados
     public @NotNull(message = "El ID del usuario no puede ser nulo") Long getIdUsers() {
         return this.id;
     }
 
     public String getName() {
-        return  this.firstName + " " + this.lastName;
+        return this.firstName + " " + this.lastName;
+    }
+
+    public Collection<Role> getRoles() {
+        List<Role> roles = new ArrayList<>();
+        for (UserRole ur : userRoles) {
+            roles.add(ur.getRole());
+        }
+        return roles;
     }
 }

@@ -16,6 +16,9 @@ public class Role {
     @Column(name = "id_role")
     private Long idRole;
 
+    @Column(name = "code_roles", length = 30, nullable = false, unique = true)
+    private String codeRoles;
+
     @Column(name = "name_role", length = 40, nullable = false, unique = true)
     private String name;
 
@@ -29,7 +32,7 @@ public class Role {
         return idRole;
     }
 
-    public Role orElseThrow(Object o) {
-        return (Role) o;
+    public String getCode() {
+        return this.codeRoles;
     }
 }
