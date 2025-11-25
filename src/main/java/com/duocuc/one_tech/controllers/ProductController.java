@@ -1,5 +1,6 @@
 package com.duocuc.one_tech.controllers;
 
+import com.duocuc.one_tech.dto.product.ProductCreateDTO;
 import com.duocuc.one_tech.dto.product.ProductDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 @CrossOrigin(origins = "*")
 public class ProductController {
 
@@ -19,13 +20,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-
     @GetMapping
     public ResponseEntity<List<ProductDTO>> listarProductos() {
         List<ProductDTO> productos = productService.listarProductos();
         return ResponseEntity.ok(productos);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> obtenerProducto(@PathVariable Long id) {
@@ -33,23 +32,21 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
-
     @PostMapping
-    public ResponseEntity<ProductDTO> crearProducto(@RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> crearProducto(@RequestBody ProductCreateDTO dto) {
+
         ProductDTO creado = productService.crearProducto(dto);
 
         URI location = URI.create("/api/products/" + creado.id());
         return ResponseEntity.created(location).body(creado);
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> actualizarProducto(@PathVariable Long id,
-                                                         @RequestBody ProductDTO dto) {
+                                                         @RequestBody ProductCreateDTO dto) {
         ProductDTO actualizado = productService.actualizarProducto(id, dto);
         return ResponseEntity.ok(actualizado);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
@@ -57,3 +54,4 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 }
+

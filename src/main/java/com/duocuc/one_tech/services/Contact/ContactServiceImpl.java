@@ -3,6 +3,7 @@ package com.duocuc.one_tech.services.Contact;
 import com.duocuc.one_tech.dto.contactMessage.ContactMessageDTO;
 import com.duocuc.one_tech.dto.contactMessage.dto.ContactMessageMapper;
 import com.duocuc.one_tech.dto.contactMessage.dto.ContactMessageRequest;
+import com.duocuc.one_tech.dto.contactMessage.dto.ContactUpdateDTO;
 import com.duocuc.one_tech.exceptions.NotFoundException;
 import com.duocuc.one_tech.models.ContactMessage;
 import com.duocuc.one_tech.models.User;
@@ -19,12 +20,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class ContactServiceImpl implements ContactService {
 
-    private final ContactMessageRepository repository;
+    private final ContactMessageRepository contactMessageRepository;
     private final UserRepository userRepository;
 
-    public ContactServiceImpl(ContactMessageRepository repository,
+    public ContactServiceImpl(ContactMessageRepository contactMessageRepository,
                               UserRepository userRepository) {
-        this.repository = repository;
+        this.contactMessageRepository = contactMessageRepository;
         this.userRepository = userRepository;
     }
 
@@ -47,14 +48,14 @@ public class ContactServiceImpl implements ContactService {
             msg.setUser(user);
         }
 
-        ContactMessage saved = repository.save(msg);
+        ContactMessage saved = contactMessageRepository.save(msg);
         return ContactMessageMapper.toDto(saved);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<ContactMessageDTO> getAllMessages() {
-        return repository.findAll().stream()
+        return contactMessageRepository.findAll().stream()
                 .map(ContactMessageMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -62,7 +63,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional(readOnly = true)
     public ContactMessageDTO getMessageById(Long id) {
-        ContactMessage msg = repository.findById(id)
+        ContactMessage msg = contactMessageRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Mensaje no encontrado con id " + id));
 
         return ContactMessageMapper.toDto(msg);
@@ -70,19 +71,52 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public ContactMessageDTO updateStatus(Long id, String status) {
-        ContactMessage msg = repository.findById(id)
+        ContactMessage msg = contactMessageRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Mensaje no encontrado con id " + id));
 
         msg.setStatus(status);
 
-        return ContactMessageMapper.toDto(repository.save(msg));
+        return ContactMessageMapper.toDto(contactMessageRepository.save(msg));
     }
 
     @Override
     public void deleteMessage(Long id) {
-        if (!repository.existsById(id)) {
+        if (!contactMessageRepository.existsById(id)) {
             throw new NotFoundException("Mensaje no encontrado con id " + id);
         }
-        repository.deleteById(id);
+        contactMessageRepository.deleteById(id);
+    }
+    @Override
+    public ContactMessageDTO actualizarMensaje(Long id, ContactUpdateDTO dto) {
+
+        ContactMessage message = contactMessageRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Mensaje no encontrado"));
+
+        message.setNameMessage(dto.nameMessage());
+        message.setEmail(dto.email());
+        message.setPhone(dto.phone());
+        message.setMessage(dto.message());
+        message.setVia(dto.via());
+        message.setStatus(dto.status());
+
+        if (dto.userId() != null) {
+            User user = userRepository.findById(dto.userId())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            message.setUser(user);
+        }
+
+        ContactMessage saved = contactMessageRepository.save(message);
+
+        return new ContactMessageDTO(
+                saved.getId(),
+                saved.getNameMessage(),
+                saved.getEmail(),
+                saved.getPhone(),
+                saved.getMessage(),
+                saved.getVia(),
+                saved.getStatus(),
+                saved.getCreatedAt(),
+                saved.getUser() != null ? saved.getUser().getId() : null
+        );
     }
 }
