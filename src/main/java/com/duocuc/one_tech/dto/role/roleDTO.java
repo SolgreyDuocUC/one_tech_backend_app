@@ -10,7 +10,9 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class RoleDTO {
+public class roleDTO {
+
+    private Long idRole;
 
     @NotNull(message = "El nombre del rol no puede estar vacío")
     private String name;
@@ -18,10 +20,16 @@ public class RoleDTO {
     @NotNull(message = "La descripción del rol no puede estar vacía")
     private String description;
 
-    // CONSTRUCTOR PARA MAPEO
-    public RoleDTO(String name, String description) {
+    // Constructor para crear o recibir datos
+    public roleDTO(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    // Constructor completo: útil para mapear entidades a DTO
+    public roleDTO(Long idRole, String name, String description) {
+        this.idRole = idRole;
         this.name = name;
         this.description = description;
     }
 }
-

@@ -10,7 +10,7 @@ import com.duocuc.one_tech.services.Cart.CartService;
 import com.duocuc.one_tech.dto.cart.dto.AddCartItemRequest;
 
 @RestController
-@RequestMapping("/api/carts")
+@RequestMapping("/api/v1/carts")
 @CrossOrigin(origins = "*")
 public class CartController {
 
