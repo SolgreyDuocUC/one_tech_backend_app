@@ -35,4 +35,11 @@ public class Role {
     public String getCode() {
         return this.codeRoles;
     }
+
+    public Role(String codeRoles, String name, String description) {
+        this.codeRoles = codeRoles;
+        this.name = name;
+        this.description = description;
+    }
+
 }
