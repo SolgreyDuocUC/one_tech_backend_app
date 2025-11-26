@@ -15,4 +15,6 @@ public interface CartService {
     CartDTO removeItem(Long cartId, Long itemId) throws NotFoundException;
 
     CartDTO clearCart(Long cartId) throws NotFoundException;
+
+    CartDTO getCartByUserId(Long userId);
 }

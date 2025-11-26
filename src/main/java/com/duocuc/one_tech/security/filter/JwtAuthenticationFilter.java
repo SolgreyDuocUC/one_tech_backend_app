@@ -2,6 +2,7 @@ package com.duocuc.one_tech.security.filter;
 
 import com.duocuc.one_tech.security.CustomUserDetailsService;
 import com.duocuc.one_tech.security.controller.JwtService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,8 +49,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }
-            } catch (Exception e) {
-                // Token inválido, no hacemos nada y dejamos que el request siga
+            } catch (JwtException e) {
+                // Invalid JWT token. We do nothing, the request will continue without authentication.
+                // Spring Security will then deny access to protected resources with a 401.
             }
         }
 

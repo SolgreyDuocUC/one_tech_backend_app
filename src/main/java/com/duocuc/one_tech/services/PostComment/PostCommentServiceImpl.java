@@ -10,6 +10,8 @@ import com.duocuc.one_tech.repositories.PostCommentRepository;
 import com.duocuc.one_tech.repositories.PostRepository;
 import com.duocuc.one_tech.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +34,9 @@ public class PostCommentServiceImpl implements PostCommentService {
         Post post = postRepository.findById(dto.getPostId())
                 .orElseThrow(() -> new RuntimeException("Post no encontrado: " + dto.getPostId()));
 
-        User author = userRepository.findById(dto.getAuthorId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + dto.getAuthorId()));
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        User author = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email " + userEmail));
 
         PostComment comment = new PostComment();
         comment.setContent(dto.getContent());
@@ -50,7 +53,6 @@ public class PostCommentServiceImpl implements PostCommentService {
     public PostCommentDTO getCommentById(Long id) {
         PostComment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new PostCommentNotFoundException(id));
-        assert comment != null;
         return mapToDTO(comment);
     }
 
@@ -67,7 +69,6 @@ public class PostCommentServiceImpl implements PostCommentService {
         PostComment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new PostCommentNotFoundException(id));
 
-        assert comment != null;
         comment.setContent(dto.getContent());
         comment.setIsVisible(dto.getIsVisible() != null ? dto.getIsVisible() : comment.getIsVisible());
 
@@ -75,11 +76,12 @@ public class PostCommentServiceImpl implements PostCommentService {
         return mapToDTO(comment);
     }
 
+
+
     @Override
     public void deleteComment(Long id) {
         PostComment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new PostCommentNotFoundException(id));
-        assert comment != null;
         commentRepository.delete(comment);
     }
 

@@ -16,9 +16,6 @@ public class CreatePostCommentDTO {
     @NotNull
     private Long postId;
 
-    @NotNull
-    private Long authorId;
-
     private Boolean isVisible = true;
 
 }

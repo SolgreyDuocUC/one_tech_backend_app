@@ -23,6 +23,12 @@ public class CartController {
         this.discountService = discountService;
     }
 
+    // GET /api/v1/carts?userId=1
+    @GetMapping
+    public ResponseEntity<CartDTO> getCartByUserId(@RequestParam Long userId) {
+        return ResponseEntity.ok(cartService.getCartByUserId(userId));
+    }
+
     // GET /api/carts/{cartId}
     @GetMapping("/{cartId}")
     public ResponseEntity<CartDTO> getCart(@PathVariable Long cartId) throws NotFoundException {

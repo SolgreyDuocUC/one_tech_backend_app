@@ -145,6 +145,11 @@ public class CartServiceImpl implements CartService {
         return CartMapper.toDto(saved);
     }
 
+    @Override
+    public CartDTO getCartByUserId(Long userId) {
+        return null;
+    }
+
     private Cart findCartOrThrow(Long cartId) throws NotFoundException {
         return cartRepository.findById(cartId)
                 .orElseThrow(() -> new NotFoundException("Carrito no encontrado con id " + cartId));

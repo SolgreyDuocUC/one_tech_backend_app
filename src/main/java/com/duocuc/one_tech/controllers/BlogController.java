@@ -8,6 +8,7 @@ import com.duocuc.one_tech.services.Blog.BlogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,53 +22,48 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    // POSTS
-
-    // GET /api/blog/posts
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> listPosts() {
-        return ResponseEntity.ok(blogService.listPosts());
+    public ResponseEntity<List<PostDTO>> listarPosts() {
+        List<PostDTO> posts = blogService.listPosts();
+        return ResponseEntity.ok(posts);
     }
 
-    // GET /api/blog/posts/{id}
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) {
-        return ResponseEntity.ok(blogService.getPostById(id));
+    public ResponseEntity<PostDTO> obtenerPost(@PathVariable Long id) {
+        PostDTO post = blogService.getPostById(id);
+        return ResponseEntity.ok(post);
     }
 
-    // GET /api/blog/posts/slug/{slug}
     @GetMapping("/posts/slug/{slug}")
-    public ResponseEntity<PostDTO> getPostBySlug(@PathVariable String slug) {
-        return ResponseEntity.ok(blogService.getPostBySlug(slug));
+    public ResponseEntity<PostDTO> obtenerPostPorSlug(@PathVariable String slug) {
+        PostDTO post = blogService.getPostBySlug(slug);
+        return ResponseEntity.ok(post);
     }
 
-    // TAGS
-
-    // GET /api/blog/tags
     @GetMapping("/tags")
-    public ResponseEntity<List<TagDTO>> listTags() {
-        return ResponseEntity.ok(blogService.listTags());
+    public ResponseEntity<List<TagDTO>> listarTags() {
+        List<TagDTO> tags = blogService.listTags();
+        return ResponseEntity.ok(tags);
     }
 
-    // COMMENTS
 
-    // GET /api/blog/posts/{postId}/comments
     @GetMapping("/posts/{postId}/comments")
-    public ResponseEntity<List<PostCommentDTO>> getCommentsByPost(@PathVariable Long postId) {
-        return ResponseEntity.ok(blogService.getCommentsByPost(postId));
+    public ResponseEntity<List<PostCommentDTO>> listarComentarios(@PathVariable Long postId) {
+        List<PostCommentDTO> comentarios = blogService.getCommentsByPost(postId);
+        return ResponseEntity.ok(comentarios);
     }
 
-    // POST /api/blog/posts/{postId}/comments?userId=1
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<PostCommentDTO> addComment(@PathVariable Long postId,
-                                                     @RequestParam Long userId,
-                                                     @RequestBody PostCommentRequest request) {
-        return ResponseEntity.ok(blogService.addComment(postId, userId, request));
+    public ResponseEntity<PostCommentDTO> crearComentario(@PathVariable Long postId,
+                                                          @RequestParam Long userId,
+                                                          @RequestBody PostCommentRequest request) {
+        PostCommentDTO creado = blogService.addComment(postId, userId, request);
+        URI location = URI.create("/api/v1/blog/comments/" + creado.id());
+        return ResponseEntity.created(location).body(creado);
     }
 
-    // DELETE /api/blog/comments/{commentId}
     @DeleteMapping("/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<Void> eliminarComentario(@PathVariable Long commentId) {
         blogService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
     }

@@ -10,6 +10,8 @@ import com.duocuc.one_tech.repositories.PostCommentRepository;
 import com.duocuc.one_tech.repositories.PostRepository;
 import com.duocuc.one_tech.repositories.TagRepository;
 import com.duocuc.one_tech.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,18 +94,15 @@ public class BlogServiceImpl implements BlogService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException("Post no encontrado con id " + postId));
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Usuario no encontrado con id " + userId));
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email " + userEmail));
 
         PostComment comment = new PostComment();
         comment.setPost(post);
         comment.setAuthor(user);
         comment.setContent(request.comment());
-
-        try {
-            comment.setCreatedAt(OffsetDateTime.now());
-        } catch (Exception ignored) {}
-
+        comment.setCreatedAt(OffsetDateTime.now());
         PostComment saved = postCommentRepository.save(comment);
         return PostCommentMapper.toDto(saved);
     }
